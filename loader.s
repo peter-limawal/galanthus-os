@@ -10,11 +10,15 @@
 
 .section .text
 .extern kernelMain; # tells assembler that there is an extern function called kernelMain
+.extern callConstructors 
 .global loader; # program entry point
 
 
 loader:
 	mov $kernel_stack, %esp
+	
+	call callConstructors
+
 	push %eax
 	push %ebx
 	call kernelMain
